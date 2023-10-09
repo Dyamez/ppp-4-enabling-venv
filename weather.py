@@ -33,30 +33,33 @@ def formatter(dates):
 
 
 def get_regional_weather(region, units=DEG_F):
-    # 'c22a9bc763f87b271b966016007372f6'
-    # '28cc5fe56aa246f9409d5a0b4fbcb5ac'
-    API_KEY = '28cc5fe56aa246f9409d5a0b4fbcb5ac'
-    API_URL = f"https: //api.openweathermap.org/data/2.5/forecast?appid={
+    # 'c22a9bc763f87b271b966016007372f6' Scott
+    # '28cc5fe56aa246f9409d5a0b4fbcb5ac' Mine
+    API_KEY = 'c22a9bc763f87b271b966016007372f6'
+    API_URL = f"https://api.openweathermap.org/data/2.5/forecast?appid={
         API_KEY}&q={region}"
 
     req = requests.get(API_URL)
     response = req.json()
 
-    pp = pprint.PrettyPrinter(intent=4)
+    pp = pprint.PrettyPrinter(indent=4)
     pp.pprint(response)
 
-    forecast_list = response['list']
 
-    dates = []
-    temps = []
+get_regional_weather('South Carolina')
 
-    temp_formatter = to_fahrenheit if units is DEG_F else to_celcius
+forecast_list = response['list']
 
-    for forecast in forecast_list:
-        date = forecast['dt_txt']
-        temp = temp_formatter(forecast['main']['feels_like'])
-        dates.append(date)
-        temps.append(temp)
+dates = []
+temps = []
+
+temp_formatter = to_fahrenheit if units is DEG_F else to_celcius
+
+for forecast in forecast_list:
+    date = forecast['dt_txt']
+    temp = temp_formatter(forecast['main']['feels_like'])
+    dates.append(date)
+    temps.append(temp)
 
     print(temps)
     print(dates)
